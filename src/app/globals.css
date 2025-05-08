@@ -1,26 +1,156 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #f8fafc;
+  --foreground: #0f172a;
+  --card-bg: #ffffff;
+  --card-border: #e2e8f0;
+  --primary: #3b82f6;
+  --primary-hover: #2563eb;
+  --secondary: #64748b;
+  --accent: #f59e0b;
+  --muted: #94a3b8;
+  --success: #10b981;
+  --error: #ef4444;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+html[data-theme="dark"], body[data-theme="dark"] {
+  --background: #111827;
+  --foreground: #f9fafb;
+  --card-bg: #1f2937;
+  --card-border: #374151;
+  --primary: #3b82f6;
+  --primary-hover: #60a5fa;
+  --secondary: #9ca3af;
+  --accent: #f59e0b;
+  --muted: #6b7280;
+  --success: #10b981;
+  --error: #ef4444;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html[data-theme="light"], body[data-theme="light"] {
+  --background: #f8fafc;
+  --foreground: #0f172a;
+  --card-bg: #ffffff;
+  --card-border: #e2e8f0;
+  --primary: #3b82f6;
+  --primary-hover: #2563eb;
+  --secondary: #64748b;
+  --accent: #f59e0b;
+  --muted: #94a3b8;
+  --success: #10b981;
+  --error: #ef4444;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Make charts responsive */
+canvas {
+  background-color: transparent !important;
+  max-width: 100%;
+  height: auto;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--card-bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--secondary);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary);
+}
+
+/* Dark mode scrollbar */
+.dark ::-webkit-scrollbar-track {
+  background: #1f2937;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: #4b5563;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #6b7280;
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  .container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  
+  h2, h3 {
+    font-size: 1.25rem;
+  }
+  
+  .grid-cols-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.5rem;
+  }
+  
+  /* Improve mobile readability */
+  p, span {
+    font-size: 0.9375rem;
+  }
+  
+  /* Better spacing for mobile */
+  .p-4 {
+    padding: 0.75rem;
+  }
+  
+  /* Adjust tab navigation for mobile */
+  .flex.border-b button {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.875rem;
+  }
+}
+
+/* Light mode specific styles */
+:root {
+  --card-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  --card-hover: #f8fafc;
+}
+
+.dark {
+  --card-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  --card-hover: #1e293b;
+}
+
+/* Card styles */
+.bg-white.dark\:bg-gray-800 {
+  box-shadow: var(--card-shadow);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.bg-white.dark\:bg-gray-800:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background-color: var(--card-hover);
+}
+
+/* Transitions for theme switching */
+body {
+  background: var(--background);
+  color: var(--foreground);
+}
+
+body, button, div, h1, h2, h3, p, span {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
