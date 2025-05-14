@@ -179,20 +179,66 @@ const DashboardPage = () => {
               <h3 className="text-xl font-semibold mb-4">Transaction Categories</h3>
               {summaryData?.expensesByCategory ? (
                 <div className={`space-y-4 ${isDarkMode ? 'dark:text-gray-100' : 'text-gray-900'}`}>
-                  {summaryData.expensesByCategory.map((category, index) => {
-                    const categoryName = category._id === null ? 'Uncategorized' : category._id;
-                    const isIncome = category.type === 'income';
-                    return (
-                      <div key={index} className={`${isDarkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'} rounded-lg p-4 shadow-sm border transition-all hover:shadow-md`}>
-                        <div className="flex justify-between items-center">
-                          <span className="font-medium capitalize">{categoryName}</span>
-                          <span className={`font-medium ${isIncome ? 'text-green-500' : 'text-red-500'}`}>
-                            Rp {category.total?.toLocaleString() || '0'}
-                          </span>
+                  {/* Sort categories by total amount and get top 5 */}
+                  {summaryData.expensesByCategory
+                    .sort((a, b) => (b.total || 0) - (a.total || 0))
+                    .slice(0, 5)
+                    .map((category, index) => {
+                      const categoryName = category._id === null ? 'Uncategorized' : category._id;
+                      const isIncome = category.type === 'income';
+                      return (
+                        <div key={index} className={`${isDarkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'} rounded-lg p-4 shadow-sm border transition-all hover:shadow-md`}>
+                          <div className="flex justify-between items-center">
+                            <span className="font-medium capitalize">{categoryName}</span>
+                            <span className={`font-medium ${isIncome ? 'text-green-500' : 'text-red-500'}`}>
+                              Rp {category.total?.toLocaleString() || '0'}
+                            </span>
+                          </div>
                         </div>
-                      </div>
-                    );
-                  })}
+                      );
+                    })}
+                  
+                  {/* Show more/less button if there are more than 5 categories */}
+                  {summaryData.expensesByCategory.length > 5 && (
+                    <button
+                      onClick={() => setExpandedTransactions(prev => ({ ...prev, categories: !prev.categories }))}
+                      className={`w-full py-2 px-4 ${isDarkMode ? 'bg-gray-800 hover:bg-gray-700 border-gray-700' : 'bg-white hover:bg-gray-50 border-gray-200'} border rounded-lg flex items-center justify-center gap-2 transition-colors`}
+                    >
+                      <span>{expandedTransactions.categories ? 'Show Less' : `Show ${summaryData.expensesByCategory.length - 5} More`}</span>
+                      <svg
+                        className={`w-4 h-4 transition-transform ${expandedTransactions.categories ? 'rotate-180' : ''}`}
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </button>
+                  )}
+                  
+                  {/* Show remaining categories when expanded */}
+                  {expandedTransactions.categories && summaryData.expensesByCategory.length > 5 && (
+                    <div className="space-y-4 mt-4">
+                      {summaryData.expensesByCategory
+                        .sort((a, b) => (b.total || 0) - (a.total || 0))
+                        .slice(5)
+                        .map((category, index) => {
+                          const categoryName = category._id === null ? 'Uncategorized' : category._id;
+                          const isIncome = category.type === 'income';
+                          return (
+                            <div key={index} className={`${isDarkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'} rounded-lg p-4 shadow-sm border transition-all hover:shadow-md`}>
+                              <div className="flex justify-between items-center">
+                                <span className="font-medium capitalize">{categoryName}</span>
+                                <span className={`font-medium ${isIncome ? 'text-green-500' : 'text-red-500'}`}>
+                                  Rp {category.total?.toLocaleString() || '0'}
+                                </span>
+                              </div>
+                            </div>
+                          );
+                        })}
+                    </div>
+                  )}
                 </div>
               ) : (
                 <p className="text-gray-500 dark:text-gray-400">Loading categories...</p>
