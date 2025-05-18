@@ -8,7 +8,7 @@ export default function Home() {
         Take control of your finances. Track your income, monitor expenses, and reach your goals — all in one place.
       </p>
       <Link
-        href="/dashboard"
+        href={process.env.WHATSAPP_PUBLIC_URL || "/"}
         className="px-6 py-3 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
       >
         Get Started
