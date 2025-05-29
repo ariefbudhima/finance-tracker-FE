@@ -143,8 +143,13 @@ export default function Home() {
                 </div>
                 <h3 className="text-xl font-bold text-gray-900 mb-3">💬 Quick Text</h3>
                 <p className="text-gray-600 mb-4">Type what you spent in natural language. No forms, no structure needed.</p>
-                <div className="bg-green-50 rounded-xl p-3 text-sm font-mono">
-                  &ldquo;saya habis beli kopi 16 ribu di family mart&rdquo;
+                <div className="bg-gray-50 rounded-xl p-3 mb-2">
+                  <div className="text-sm text-gray-500 italic mb-1">
+                    &ldquo;saya habis beli kopi 16 ribu di family mart&rdquo;
+                  </div>
+                </div>
+                <div className="text-xs text-gray-400">
+                  Contoh pesan WhatsApp
                 </div>
               </div>
             </div>
@@ -160,8 +165,13 @@ export default function Home() {
                 </div>
                 <h3 className="text-xl font-bold text-gray-900 mb-3">📊 View Dashboard</h3>
                 <p className="text-gray-600 mb-4">Type &ldquo;dashboard&rdquo; to get your personal finance analytics with charts and insights.</p>
-                <div className="bg-purple-50 rounded-xl p-3 text-sm font-mono">
-                  &ldquo;dashboard&rdquo;
+                <div className="bg-gray-50 rounded-xl p-3 mb-2">
+                  <div className="text-sm text-gray-500 italic">
+                    &ldquo;dashboard&rdquo;
+                  </div>
+                </div>
+                <div className="text-xs text-gray-400">
+                  Ketik ini untuk lihat laporan
                 </div>
               </div>
             </div>
