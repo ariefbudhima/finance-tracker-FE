@@ -17,14 +17,7 @@ interface SummaryData {
     transaction_count: number;
     income: number;
     expense: number;
-    transactions?: {
-      _id: string;
-      amount: number;
-      type: string;
-      category: string | null;
-      time: string;
-      description: string | null;
-    }[];
+    transactions?: Transaction[];
     category_summary: {
       category: string | null;
       total: number;
@@ -36,6 +29,16 @@ interface SummaryData {
       }[];
     }[];
   }[];
+}
+
+interface Transaction {
+  _id?: string;
+  id?: string;
+  amount: number;
+  type: string;
+  category: string | null;
+  time: string;
+  description: string | null;
 }
 
 // Helper function to get emoji for categories
@@ -74,7 +77,7 @@ const deleteTransaction = async (transactionId: string, token: string) => {
   return response.json();
 };
 
-const updateTransaction = async (transactionId: string, token: string, data: any) => {
+const updateTransaction = async (transactionId: string, token: string, data: { items: { name: string; price: number; quantity: number; type: string }[] }) => {
   try {
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api'}/transactions/${transactionId}`, {
       method: 'PATCH',
@@ -89,7 +92,7 @@ const updateTransaction = async (transactionId: string, token: string, data: any
       let errorText = '';
       try {
         errorText = await response.text();
-      } catch (e) {
+      } catch {
         errorText = 'Unable to read error response';
       }
       throw new Error(`HTTP ${response.status}: ${errorText || 'Failed to update transaction'}`);
@@ -195,8 +198,8 @@ const DashboardPage = () => {
     }
   };
 
-  const handleEditTransaction = (transaction: any) => {
-    const transactionId = transaction._id || (transaction as any).id;
+  const handleEditTransaction = (transaction: Transaction) => {
+    const transactionId = transaction._id || transaction.id;
     
     if (!transactionId) {
       console.error('Transaction missing _id and id:', transaction);
@@ -527,7 +530,7 @@ const DashboardPage = () => {
                             {expense.transactions && expense.transactions.length > 0 ? (
                               <div className={`space-y-3 pl-6 border-l-4 ${isDarkMode ? 'border-blue-600' : 'border-blue-500'}`}>
                                 {expense.transactions.map((transaction, detailIndex) => {
-                                  const isEditing = editingTransaction === (transaction as any).id;
+                                  const isEditing = editingTransaction === (transaction.id || transaction._id);
                                   
                                   return (
                                     <div key={detailIndex} className={`${isDarkMode ? 'bg-gray-700/50' : 'bg-gray-50'} rounded-xl p-4 transition-all duration-300 hover:shadow-lg transform hover:scale-[1.01]`}>
@@ -656,7 +659,7 @@ const DashboardPage = () => {
                                               <button
                                                 onClick={(e) => {
                                                   e.stopPropagation();
-                                                  const transactionId = transaction._id || (transaction as any).id;
+                                                  const transactionId = transaction._id || transaction.id;
                                                   if (transactionId) {
                                                     handleDeleteTransaction(transactionId);
                                                   } else {
