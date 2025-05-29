@@ -37,6 +37,15 @@ export default function Home() {
               <a href="#pricing" className="text-gray-600 hover:text-gray-900 font-medium transition-colors">
                 Pricing
               </a>
+              <a 
+                href="https://bagibagi.co/ariefbudhiman" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-orange-600 hover:text-orange-700 font-medium transition-colors flex items-center gap-1"
+              >
+                <span>💝</span>
+                Support
+              </a>
             </nav>
 
             {/* CTA Button */}
@@ -193,6 +202,24 @@ export default function Home() {
               <p className="text-sm text-gray-600">Works in WhatsApp you already have</p>
             </div>
           </div>
+
+          {/* Support Section */}
+          <div className="mt-12 text-center">
+            <div className="inline-flex items-center gap-3 bg-gradient-to-r from-orange-100 to-pink-100 rounded-2xl p-4 border border-orange-200/50">
+              <span className="text-2xl">💝</span>
+              <div className="text-left">
+                <p className="text-gray-700 font-medium">Love this project?</p>
+                <a 
+                  href="https://bagibagi.co/ariefbudhiman" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-orange-600 hover:text-orange-700 font-semibold transition-colors"
+                >
+                  Support the developer →
+                </a>
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* CTA Section */}
@@ -221,6 +248,21 @@ export default function Home() {
             <p className="text-gray-500 text-sm mt-4">
               ✨ No signup required • Works instantly • 100% free to start
             </p>
+            
+            {/* Subtle support link */}
+            <div className="mt-6 pt-4 border-t border-gray-200/50">
+              <p className="text-gray-400 text-xs">
+                Made with ❤️ by an indie developer • 
+                <a 
+                  href="https://bagibagi.co/ariefbudhiman" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-orange-500 hover:text-orange-600 ml-1 transition-colors"
+                >
+                  Support this project
+                </a>
+              </p>
+            </div>
           </div>
         </div>
       </div>
